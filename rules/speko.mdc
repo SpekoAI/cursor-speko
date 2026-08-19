@@ -1,0 +1,33 @@
+---
+description: How to reach Speko correctly — which host, which key, and which surface answers. Apply whenever the work touches speech, transcription, model routing, voice agents or phone calls through Speko.
+alwaysApply: false
+---
+
+# Working with Speko
+
+Speko is two hosts with two non-interchangeable keys. Getting this wrong is the single most
+common cause of a 401 that looks like an outage.
+
+| Host | What it serves | Key | Base URL |
+| --- | --- | --- | --- |
+| Router | STT, LLM, TTS — one request, benchmark-routed | `SPEKO_API_KEY` (`sk_...`) | `https://api.speko.ai/v1` |
+| Platform | Agents, sessions, phone numbers, calls, knowledge bases, evals | `SPEKO_PLATFORM_API_KEY` (`sk_live_...`) | `https://api.speko.dev/v1` |
+
+A key for one host returns 401 on the other. Keys are environment-scoped, so a staging key
+fails against production. The hosted MCP at `mcp.speko.ai` speaks the platform side and
+rejects a router key outright — it wants OAuth or a platform key.
+
+## Rules
+
+- Prefer the `speko` skill for transcription, synthesis and routing; prefer the Speko MCP
+  tools for anything that creates, deploys, inspects or bills an agent.
+- Never hardcode a vendor. `model: "auto"` routes on measured benchmarks; pin a model only
+  when the user names one, and only from a `routable: true` row of `GET /v1/models`.
+- Justify a routing choice with `GET /v1/routing/preview` before spending. It costs nothing
+  and returns the pick, the reason, and the benchmark window behind it.
+- Always request `response_format: "wav"` from `/v1/audio/speech`. The default is headerless
+  24 kHz PCM that no player opens, and mp3 is refused before any upstream call.
+- Read the `x-route` response header rather than assuming a pin won.
+- Placing a phone call is irreversible and billed. Confirm the E.164 number, the purpose and
+  the local hour with the user before dialing, every time. See the `speko-calls` skill.
+- Read keys from the environment. Never inline one into a command that gets logged.
