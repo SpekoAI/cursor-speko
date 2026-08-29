@@ -1,21 +1,22 @@
 ---
-description: How to reach Speko correctly — which host, which key, and which surface answers. Apply whenever the work touches speech, transcription, model routing, voice agents or phone calls through Speko.
+description: How to reach Speko correctly — which host answers which surface, and how the one Speko key is used. Apply whenever the work touches speech, transcription, model routing, voice agents or phone calls through Speko.
 alwaysApply: false
 ---
 
 # Working with Speko
 
-Speko is two hosts with two non-interchangeable keys. Getting this wrong is the single most
-common cause of a 401 that looks like an outage.
+Speko is two hosts and one key. Pick the host by the surface you need; the same `sk_live_`
+credential authenticates both.
 
-| Host | What it serves | Key | Base URL |
-| --- | --- | --- | --- |
-| Router | STT, LLM, TTS — one request, benchmark-routed | `SPEKO_API_KEY` (`sk_...`) | `https://api.speko.ai/v1` |
-| Platform | Agents, sessions, phone numbers, calls, knowledge bases, evals | `SPEKO_PLATFORM_API_KEY` (`sk_live_...`) | `https://api.speko.dev/v1` |
+| Host | What it serves | Base URL |
+| --- | --- | --- |
+| Router | STT, LLM, TTS — one request, benchmark-routed | `https://api.speko.ai/v1` |
+| Platform | Agents, sessions, phone numbers, calls, knowledge bases, evals | `https://api.speko.dev/v1` |
 
-A key for one host returns 401 on the other. Keys are environment-scoped, so a staging key
-fails against production. The hosted MCP at `mcp.speko.ai` speaks the platform side and
-rejects a router key outright — it wants OAuth or a platform key.
+One key, minted once at [platform.speko.ai/api-keys](https://platform.speko.ai/api-keys), works
+on both. Keys are environment-scoped, so a staging key still fails against production — that is
+the 401 to check for first. The hosted MCP at `mcp.speko.ai` speaks the platform side and takes
+OAuth or the same key.
 
 ## Rules
 
@@ -31,3 +32,6 @@ rejects a router key outright — it wants OAuth or a platform key.
 - Placing a phone call is irreversible and billed. Confirm the E.164 number, the purpose and
   the local hour with the user before dialing, every time. See the `speko-calls` skill.
 - Read keys from the environment. Never inline one into a command that gets logged.
+- `speko-calls` reads `SPEKO_PLATFORM_API_KEY`. That is the same Speko key under a second name,
+  set deliberately and only where dialing is approved — the separation is a safety gate, not a
+  technical requirement.

@@ -14,7 +14,7 @@ carries its own routing policy, so a fully configured key needs none of the head
 
 This plugin also connects the hosted Speko MCP (`https://mcp.speko.ai/mcp`). That server
 covers the **platform** side — agents, sessions, phone numbers, knowledge bases, evals,
-deployments — and answers to OAuth or a platform key. It does **not** carry the router
+deployments — and answers to OAuth or the same Speko key. It does **not** carry the router
 endpoints below, so use the curl forms here for transcription, synthesis and routing, and the
 MCP tools for anything that manages an agent or reads a session back.
 
@@ -94,16 +94,17 @@ Read back what actually happened: `x-route` is the vendor and model that answere
 ## Phone calls are a separate skill
 
 This skill never places calls and never asks for a calling credential. Outbound telephony runs
-on a different host with a different, higher-impact key, so it lives in the companion skill
-`speko-calls`, which declares that credential itself and is only eligible once it is present.
+on a different host and is higher-impact, so it lives in the companion skill `speko-calls`,
+which reads its own environment variable and is only eligible once that is set.
 
 ## Gotchas
 
-- Two hosts, two keys: `api.speko.ai` is the router (STT/LLM/TTS) and is the only host this
-  skill uses; `api.speko.dev` is the platform (agents, phone numbers, calls) and needs its own
-  key. A key for one returns 401 on the other, and the hosted MCP at `mcp.speko.ai` rejects a
-  router key outright — it wants a platform key or OAuth.
-- Keys are environment-scoped: a staging key fails against production.
+- Two hosts, one key: `api.speko.ai` is the router (STT/LLM/TTS) and is the only host this
+  skill uses; `api.speko.dev` is the platform (agents, phone numbers, calls). The same Speko
+  key authenticates both, and the hosted MCP at `mcp.speko.ai` takes it or OAuth. Pick the host
+  by the surface you need, not by which key you hold.
+- Keys are environment-scoped: a staging key fails against production. That is the 401 to check
+  for first.
 - `X-Speko-Allow` with a bare provider name silently matches nothing. Always `provider:model`.
 - A `200` from a streaming TTS route can still be empty. Check the byte count.
 - Non-WAV audio posted to the platform's raw-body transcribe endpoint can return `200` with an

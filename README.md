@@ -28,25 +28,26 @@ existing config.
 
 | Skill | Use it for | Credential |
 | --- | --- | --- |
-| `speko` | Transcribe audio, synthesize speech, choose and justify a model, cap voice spend | `SPEKO_API_KEY` (router) |
-| `speko-calls` | Place and follow real outbound phone calls | `SPEKO_PLATFORM_API_KEY` (platform) |
+| `speko` | Transcribe audio, synthesize speech, choose and justify a model, cap voice spend | `SPEKO_API_KEY` |
+| `speko-calls` | Place and follow real outbound phone calls | `SPEKO_PLATFORM_API_KEY` — the same key, set deliberately |
 
 Telephony is a separate skill on purpose. Dialing rings a physical device, costs money and cannot
-be recalled, so it carries its own higher-impact credential and confirms the number, the purpose
-and the local hour before every call. Installing speech support never grants calling ability.
+be recalled, so it reads its own environment variable and confirms the number, the purpose and the
+local hour before every call. One Speko key covers both skills, so the second variable is a
+deliberate gate rather than a different credential: installing speech support does not by itself
+put a calling instruction in play.
 
-**Rule** — `rules/speko.mdc` keeps the agent on the right host with the right key, since a router
-key and a platform key both look like Speko keys and each returns 401 on the other's host.
+**Rule** — `rules/speko.mdc` keeps the agent on the right host for the surface it needs.
 
 ## Configuration
 
 | Variable | Needed for | Where |
 | --- | --- | --- |
-| `SPEKO_API_KEY` | The `speko` skill's direct router calls | [platform.speko.dev/api-keys](https://platform.speko.dev/api-keys) |
-| `SPEKO_PLATFORM_API_KEY` | The `speko-calls` skill | Same dashboard, platform scope |
+| `SPEKO_API_KEY` | The `speko` skill's direct router calls | [platform.speko.ai/api-keys](https://platform.speko.ai/api-keys) |
+| `SPEKO_PLATFORM_API_KEY` | The `speko-calls` skill — same key, second name | Same dashboard |
 
-Neither is required for the MCP tools, which use OAuth. Only supply the platform key in an
-environment where outbound dialing is approved and audited.
+One key covers both hosts. Neither variable is required for the MCP tools, which use OAuth. Only
+set the calls variable in an environment where outbound dialing is approved and audited.
 
 ## Links
 

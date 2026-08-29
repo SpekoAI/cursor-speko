@@ -1,6 +1,6 @@
 ---
 name: speko-calls
-description: Place and monitor outbound AI phone calls through Speko. This skill dials real telephone numbers and costs real money, so it needs its own platform credential and asks the user to confirm the number and the purpose before every call. Use when explicitly asked to call someone, ring a number, run an outbound voice campaign, or check the status, recording or transcript of a call that was already placed. For transcription, speech synthesis or model routing with no dialing involved, use the speko skill instead.
+description: Place and monitor outbound AI phone calls through Speko. This skill dials real telephone numbers and costs real money, so it reads its own environment variable and asks the user to confirm the number and the purpose before every call. Use when explicitly asked to call someone, ring a number, run an outbound voice campaign, or check the status, recording or transcript of a call that was already placed. For transcription, speech synthesis or model routing with no dialing involved, use the speko skill instead.
 ---
 
 # Speko calls
@@ -9,14 +9,13 @@ This skill dials real phones. Treat every call as irreversible: it rings a physi
 it can reach a stranger, it is billed, and it cannot be recalled once connected.
 
 It is deliberately separate from the `speko` skill. Speech, transcription and model routing
-need only the router key and place no calls; dialing needs the **platform** key, which is a
-higher-impact credential. Keeping them apart means installing speech support never grants
-calling ability.
+place no calls; dialing is irreversible and billed. One Speko key covers both, so the split is
+enforced by the environment rather than by the credential: this skill reads a second variable
+that a speech-only setup has no reason to set.
 
-Nothing in Cursor gates this skill on the credential being present — the separation is the
-credential itself. If `SPEKO_PLATFORM_API_KEY` is not in the environment, every command below
-returns 401 and no call is placed. The confirmation steps in the next section are mandatory
-regardless.
+Nothing in Cursor gates this skill on that variable being present. If `SPEKO_PLATFORM_API_KEY`
+is not in the environment, every command below has nothing to send and no call is placed. The
+confirmation steps in the next section are mandatory regardless.
 
 The hosted Speko MCP shipped with this plugin exposes the same telephony surface as tools
 (`sessions.phone_create`, `calls.get`, `sessions.transcript_get`, `phone_numbers.list`). The
@@ -25,12 +24,12 @@ transport reached the API.
 
 ## Credential
 
-`SPEKO_PLATFORM_API_KEY` — a **platform** key, from the Speko dashboard. Host is
+`SPEKO_PLATFORM_API_KEY` — your Speko key from the dashboard, on the **platform** host
 `https://api.speko.dev/v1`.
 
-This is not the router key the `speko` skill uses. The two do not cross: a router key returns
-401 here, and a platform key returns 401 on `api.speko.ai`. Keys are also environment-scoped,
-so a staging key fails against production.
+It is the same key the `speko` skill uses on the router host; the second variable name is the
+gate, so set it only where dialing is approved. Keys are environment-scoped, so a staging key
+fails against production.
 
 **Only supply this key in an environment where dialing is approved, audited and expected.**
 If it is absent, this skill is not eligible and no calling instruction is in play.
