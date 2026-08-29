@@ -16,7 +16,7 @@ be pasted for the MCP tools.
 
 ## What you get
 
-**MCP — `https://mcp.speko.ai/mcp`** (OAuth, or a platform key as `Authorization: Bearer sk_live_…`)
+**MCP — `https://mcp.speko.ai/mcp`** (OAuth, or your Speko key as `Authorization: Bearer sk_live_…`)
 
 Agents (`agents.create`, `agents.update`, `agents.deploy`, `agents.rollback`, `agents.test_call`),
 sessions and calls (`sessions.create`, `sessions.phone_create`, `sessions.transcript_get`,
@@ -51,9 +51,9 @@ set the calls variable in an environment where outbound dialing is approved and 
 
 ## Links
 
-- Docs — <https://docs.speko.ai>
+- Docs — <https://docs.speko.dev>
 - Benchmarks the routing is built on — <https://benchmarks.speko.ai>
-- MCP quickstart — <https://docs.speko.ai/quickstart/mcp>
+- MCP quickstart — <https://docs.speko.dev/quickstart/mcp>
 
 ## License
 

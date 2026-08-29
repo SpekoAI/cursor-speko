@@ -8,6 +8,7 @@
 - `speko-calls` still reads `SPEKO_PLATFORM_API_KEY`, now described honestly: the same key under
   a second name, so the dialing gate stays deliberate.
 - Key minting link corrected to `platform.speko.ai/api-keys`.
+- Docs links point at `docs.speko.dev`, the host the MCP server itself redirects to.
 
 ## 0.1.0
 
