@@ -1,6 +1,7 @@
 # Speko for Cursor
 
-Voice AI inside Cursor. One install gives the agent the Speko platform as MCP tools, plus two
+Phone calls, transcription and speech for your agent. One install gives it the Speko platform as
+MCP tools — place and monitor real AI phone calls, transcribe audio, synthesize speech — plus two
 skills and a rule that teach it to use them correctly.
 
 Speko routes every leg of a voice pipeline — speech-to-text, LLM, text-to-speech — from its own

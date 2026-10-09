@@ -1,7 +1,7 @@
 {
   "name": "speko",
-  "description": "Voice AI in Cursor: transcribe audio, synthesize speech, route each leg of a voice pipeline from measured benchmarks, and place real phone calls — through one Speko account.",
-  "version": "0.2.0",
+  "description": "Phone calls, transcription and speech through one Speko account: place and monitor real AI phone calls, transcribe audio, and synthesize speech, with each model picked from measured benchmarks.",
+  "version": "0.2.1",
   "author": { "name": "Speko" },
   "homepage": "https://speko.ai",
   "repository": "https://github.com/SpekoAI/cursor-speko",

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+- Description leads with phone calls, the capability the plugin is installed for, and no longer
+  says "in Cursor" — the same listing also appears in Grok Bot.
+
 ## 0.2.0
 
 - One Speko key now covers both hosts. Removed the claim that a router key and a platform key
