@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.2
+
+- Description and README lead match the approved Claude connector listing: the same headline
+  ("Make phone calls, transcribe audio, and narrate text."), the same call-first example, and the
+  same model counts, so Speko reads the same in every directory.
+- Keywords lead with what people search for: phone calls and transcription.
+- The `speko` skill no longer states a model count, which had drifted from the listing.
+
 ## 0.2.1
 
 - Description leads with phone calls, the capability the plugin is installed for, and no longer

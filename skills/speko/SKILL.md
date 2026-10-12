@@ -1,6 +1,6 @@
 ---
 name: speko
-description: Use Speko to transcribe audio, synthesize speech, and pick the model for each leg of a voice pipeline from measured benchmarks instead of a hardcoded vendor. One key covers STT, LLM and TTS across 50+ models, with a dry-run route preview, per-language selection, price ceilings and automatic failover. Use when asked to transcribe a recording or voice note, read something aloud, choose or justify a speech model, work in a language other than English, or cap voice spend. For placing phone calls, use the speko-calls skill instead.
+description: Use Speko to transcribe audio, synthesize speech, and pick the model for each leg of a voice pipeline from measured benchmarks instead of a hardcoded vendor. One key covers STT, LLM and TTS, with a dry-run route preview, per-language selection, price ceilings and automatic failover. Use when asked to transcribe a recording or voice note, read something aloud, choose or justify a speech model, work in a language other than English, or cap voice spend. For placing phone calls, use the speko-calls skill instead.
 ---
 
 # Speko
