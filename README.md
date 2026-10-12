@@ -1,8 +1,10 @@
 # Speko for Cursor
 
-Phone calls, transcription and speech for your agent. One install gives it the Speko platform as
-MCP tools — place and monitor real AI phone calls, transcribe audio, synthesize speech — plus two
-skills and a rule that teach it to use them correctly.
+Make phone calls, transcribe audio, and narrate text. Say "Call this number and ask if they are
+open on Sunday" and your agent calls from a number on your Speko account, then brings back the
+transcript and recording. Paste a link and ask for a transcript with word timestamps. Paste a
+script, pick one of 100+ voices, and get the audio file back. One install gives your agent the
+Speko platform as MCP tools, plus two skills and a rule that teach it to use them correctly.
 
 Speko routes every leg of a voice pipeline — speech-to-text, LLM, text-to-speech — from its own
 benchmark readings rather than a hardcoded vendor: measured latency, measured quality, published
