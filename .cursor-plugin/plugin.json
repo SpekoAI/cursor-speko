@@ -1,14 +1,31 @@
 {
   "name": "speko",
-  "description": "Make phone calls, transcribe audio, and narrate text. Ask your agent to call a number and it calls from your Speko account, then brings back the transcript and recording. One API across 73 text-to-speech, 54 speech-to-text and 20 speech-to-speech models; sign in with OAuth, no API key to paste.",
-  "version": "0.2.2",
-  "author": { "name": "Speko" },
+  "description": "AI phone calls and an AI receptionist on your own number. Call any business or person in the US or abroad, from anywhere, from a number that is yours, so they see it and can call back; every call comes back with a transcript, recording, summary and cost. Set up a receptionist that answers your business line, takes messages and booking requests, and sends you a summary after every call. Also transcribes audio and narrates text. Sign in with OAuth, no API key to paste.",
+  "version": "0.3.0",
+  "author": {
+    "name": "Speko"
+  },
   "homepage": "https://speko.ai",
   "repository": "https://github.com/SpekoAI/cursor-speko",
   "license": "MIT",
-  "keywords": ["phone-calls", "transcription", "text-to-speech", "speech-to-text", "voice-agents", "voice"],
+  "keywords": [
+    "phone-calls",
+    "ai-receptionist",
+    "answer-calls",
+    "international-calls",
+    "phone-number",
+    "voice-agents",
+    "transcription",
+    "text-to-speech",
+    "speech-to-text",
+    "voice"
+  ],
   "logo": "assets/logo.svg",
   "mcpServers": "mcp.json",
-  "skills": ["skills"],
-  "rules": ["rules"]
+  "skills": [
+    "skills"
+  ],
+  "rules": [
+    "rules"
+  ]
 }

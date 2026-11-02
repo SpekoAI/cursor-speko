@@ -1,10 +1,12 @@
-# Speko for Cursor
+# Speko for Cursor and Grok Bot
 
-Make phone calls, transcribe audio, and narrate text. Say "Call this number and ask if they are
-open on Sunday" and your agent calls from a number on your Speko account, then brings back the
-transcript and recording. Paste a link and ask for a transcript with word timestamps. Paste a
-script, pick one of 100+ voices, and get the audio file back. One install gives your agent the
-Speko platform as MCP tools, plus two skills and a rule that teach it to use them correctly.
+AI phone calls and an AI receptionist on your own number. Say "Call this restaurant and book a
+table for two at 7" and your agent calls from a number on your Speko account, in the US or abroad,
+then brings back the transcript, recording, summary and cost. Say "Answer my business line when I
+miss a call" and it sets up a receptionist that takes messages or booking requests and sends you a
+summary after every call. It also transcribes audio and narrates text with 100+ voices. One
+install gives your agent the Speko platform as MCP tools, plus three skills and a rule that teach
+it to use them correctly.
 
 Speko routes every leg of a voice pipeline — speech-to-text, LLM, text-to-speech — from its own
 benchmark readings rather than a hardcoded vendor: measured latency, measured quality, published
@@ -32,7 +34,8 @@ existing config.
 | Skill | Use it for | Credential |
 | --- | --- | --- |
 | `speko` | Transcribe audio, synthesize speech, choose and justify a model, cap voice spend | `SPEKO_API_KEY` |
-| `speko-calls` | Place and follow real outbound phone calls | `SPEKO_PLATFORM_API_KEY` — the same key, set deliberately |
+| `speko-calls` | Place and follow real phone calls, in the US or abroad, from your own number | `SPEKO_PLATFORM_API_KEY` — the same key, set deliberately |
+| `speko-receptionist` | Answer incoming calls on a business line: messages, booking requests, transfers, call summaries | None — MCP tools with OAuth |
 
 Telephony is a separate skill on purpose. Dialing rings a physical device, costs money and cannot
 be recalled, so it reads its own environment variable and confirms the number, the purpose and the
