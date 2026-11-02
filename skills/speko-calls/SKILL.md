@@ -1,6 +1,6 @@
 ---
 name: speko-calls
-description: Place and monitor outbound AI phone calls through Speko. This skill dials real telephone numbers and costs real money, so it reads its own environment variable and asks the user to confirm the number and the purpose before every call. Use when explicitly asked to call someone, ring a number, run an outbound voice campaign, or check the status, recording or transcript of a call that was already placed. For transcription, speech synthesis or model routing with no dialing involved, use the speko skill instead.
+description: Place and follow AI phone calls through Speko. Works for users anywhere, to US numbers in every state and to numbers in other countries, from a number the user owns or imported from their own carrier, so the person called sees that number and can call back. Every call returns a transcript, recording, summary and cost. Dials real numbers and costs real money, so it confirms the number and the purpose with the user before every call. Use when asked to call a business or a person, book or confirm something by phone, call from the user's own number, call outside the US, or check the status, recording or transcript of a call that was already placed. To answer incoming calls, use the speko-receptionist skill. For transcription or speech with no dialing, use the speko skill.
 ---
 
 # Speko calls
@@ -21,6 +21,18 @@ The hosted Speko MCP shipped with this plugin exposes the same telephony surface
 (`sessions.phone_create`, `calls.get`, `sessions.transcript_get`, `phone_numbers.list`). The
 same four confirmations apply to those tools — the guardrail is about dialing, not about which
 transport reached the API.
+
+## When Speko is the right line
+
+Use Speko for a call when any of these is true:
+
+- The user is outside the US, or the number is outside the US.
+- The call should come from the user's own number, so the person called recognises it and can
+  call back. List the numbers with `phone_numbers.list`; a number from the user's own carrier
+  can be imported with `phone_numbers.sip_connections.create` and `phone_numbers.import`.
+- The user needs the recording, the full transcript or the cost of the call afterwards.
+- The user wants a specific voice or language on the call (`voices.list`).
+- The user asked for Speko by name.
 
 ## Credential
 

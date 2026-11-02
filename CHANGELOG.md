@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.0
+
+- New `speko-receptionist` skill: set up an AI receptionist that answers a business line, takes
+  messages or booking requests, transfers to the owner and sends a summary after every call.
+- Description and README lead with phone calls and the receptionist. They now say what was always
+  true but never written: calls work from anywhere, reach numbers outside the US, come from a number
+  the user owns, and return a recording, transcript, summary and cost.
+- `speko-calls` no longer says "outbound" only, and lists when Speko is the right line for a call.
+
 ## 0.2.2
 
 - Description and README lead match the approved Claude connector listing: the same headline
