@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.3.1
+
+- Description names speech synthesis next to calls and the receptionist.
+- The `speko` skill uses the MCP tools (`audio.synthesize`, `voices.list`, `audio.transcribe`)
+  when the user is signed in through the plugin, so speech works with no key. It no longer says
+  the MCP server cannot synthesize or transcribe.
+- `speko-calls` and `speko-receptionist` offer to play a voice, an opening line or a greeting
+  with `audio.synthesize` before it is used.
+- `speko-calls` no longer says a number has to be provisioned first. `from` is optional, and a
+  workspace with no number usually calls from a shared Speko caller ID.
+- Tool names corrected to the names the MCP server serves: `sessions.phone.create`,
+  `sessions.transcript.get`, `sessions.recording.get`, `receptionist.settings.update`.
+- Links point at the current hosts: `speko.com`, `docs.speko.ai`, `speko.com/benchmarks` and
+  `platform.speko.ai/agents/keys`.
+
 ## 0.3.0
 
 - New `speko-receptionist` skill: set up an AI receptionist that answers a business line, takes

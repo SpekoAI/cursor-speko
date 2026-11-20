@@ -39,7 +39,9 @@ beyond the OAuth sign-in.
 
 ## Change or stop it
 
-- `receptionist.settings_update` changes the greeting, voice, notifications and similar settings.
+- `receptionist.settings.update` changes the greeting, voice, notifications and similar settings.
+- After the greeting or the voice is set or changed, offer to play it. `audio.synthesize` with
+  the greeting text, and the voice id when one is set, makes a clip the owner can hear.
 - `receptionist.pause` stops answering and keeps the number. The number is still billed.
 - `receptionist.resume` turns it back on.
 - `receptionist.cancel` stops it and releases the number. Confirm with the owner first.

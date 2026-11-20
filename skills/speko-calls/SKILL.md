@@ -1,6 +1,6 @@
 ---
 name: speko-calls
-description: Place and follow AI phone calls through Speko. Works for users anywhere, to US numbers in every state and to numbers in other countries, from a number the user owns or imported from their own carrier, so the person called sees that number and can call back. Every call returns a transcript, recording, summary and cost. Dials real numbers and costs real money, so it confirms the number and the purpose with the user before every call. Use when asked to call a business or a person, book or confirm something by phone, call from the user's own number, call outside the US, or check the status, recording or transcript of a call that was already placed. To answer incoming calls, use the speko-receptionist skill. For transcription or speech with no dialing, use the speko skill.
+description: Place and follow AI phone calls through Speko. Works for users anywhere, to US numbers in every state and to numbers in other countries, from a shared Speko caller ID, or from a number the user owns or imported from their own carrier, which the person called sees and can call back. Every call returns a transcript, recording, summary and cost. Dials real numbers and costs real money, so it confirms the number and the purpose with the user before every call. Use when asked to call a business or a person, book or confirm something by phone, call from the user's own number, call outside the US, or check the status, recording or transcript of a call that was already placed. To answer incoming calls, use the speko-receptionist skill. For transcription or speech with no dialing, use the speko skill.
 ---
 
 # Speko calls
@@ -14,13 +14,13 @@ enforced by the environment rather than by the credential: this skill reads a se
 that a speech-only setup has no reason to set.
 
 Nothing in Cursor gates this skill on that variable being present. If `SPEKO_PLATFORM_API_KEY`
-is not in the environment, every command below has nothing to send and no call is placed. The
-confirmation steps in the next section are mandatory regardless.
+is not in the environment, the curl commands below have nothing to send.
 
 The hosted Speko MCP shipped with this plugin exposes the same telephony surface as tools
-(`sessions.phone_create`, `calls.get`, `sessions.transcript_get`, `phone_numbers.list`). The
-same four confirmations apply to those tools — the guardrail is about dialing, not about which
-transport reached the API.
+(`sessions.phone.create`, `sessions.phone.quote`, `calls.get`, `sessions.transcript.get`,
+`phone_numbers.list`). With the plugin's OAuth sign-in those tools need no key. The same four
+confirmations apply to them and are mandatory on both routes: the guardrail is about dialing,
+not about which transport reached the API.
 
 ## When Speko is the right line
 
@@ -44,7 +44,8 @@ gate, so set it only where dialing is approved. Keys are environment-scoped, so 
 fails against production.
 
 **Only supply this key in an environment where dialing is approved, audited and expected.**
-If it is absent, this skill is not eligible and no calling instruction is in play.
+If it is absent, the curl commands in this skill cannot run. The MCP tools still can, with the
+same confirmations.
 
 ## Before every call
 
@@ -56,6 +57,10 @@ Do all four. Do not skip one because the request looked explicit.
 3. **Check the hour** at the destination. Do not cold-call outside normal waking hours.
 4. **Stop at one call** unless the user asked for more, by number, one at a time. Never loop
    over a list without per-number confirmation.
+
+When the user chose a voice or wrote the opening line, offer to play it first.
+`audio.synthesize` with that voice and text makes a clip without dialing, so the user can
+hear the voice and the wording before the call.
 
 Refuse, and say plainly why, if the request is to dial an emergency line, a premium-rate
 number, a number the user does not appear to have a relationship with, or any recipient at
@@ -69,8 +74,11 @@ curl -s https://api.speko.dev/v1/phone-numbers \
 ```
 
 Returns a **bare JSON array**, not an object. The path is kebab-case — `/v1/phone_numbers`
-404s. `from` on a call must be a number the organisation owns. If it owns exactly one outbound
-number, use it; if several, ask which; if none, say one has to be provisioned first.
+404s. `from` is optional. When it is set, it must be a number the organisation owns: if it
+owns exactly one outbound number, use it; if several, ask which. If it owns none, leave `from`
+out. The call then usually goes out from a shared Speko caller ID (US and Canada), and no
+number has to be bought first. `sessions.phone.quote` says whether a given number can be
+called now.
 
 ## Place the call
 
