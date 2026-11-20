@@ -1,11 +1,11 @@
 {
   "name": "speko",
-  "description": "AI phone calls and an AI receptionist on your own number. Call any business or person in the US or abroad, from anywhere, from a number that is yours, so they see it and can call back; every call comes back with a transcript, recording, summary and cost. Set up a receptionist that answers your business line, takes messages and booking requests, and sends you a summary after every call. Also transcribes audio and narrates text. Sign in with OAuth, no API key to paste.",
-  "version": "0.3.0",
+  "description": "AI phone calls, an AI receptionist and natural speech synthesis on one account. Call any business or person in the US or abroad from a number that is yours, so they see it and can call back; every call comes back with a transcript, recording, and summary. Set up a receptionist that answers your business line, takes messages and booking requests, and sends you a summary after every call. Turn any text into spoken audio in 100+ voices, and hear a voice or a greeting before it goes on a call. Also transcribes audio files under various languages.",
+  "version": "0.3.1",
   "author": {
     "name": "Speko"
   },
-  "homepage": "https://speko.ai",
+  "homepage": "https://speko.com",
   "repository": "https://github.com/SpekoAI/cursor-speko",
   "license": "MIT",
   "keywords": [
@@ -16,6 +16,8 @@
     "phone-number",
     "voice-agents",
     "transcription",
+    "voiceover",
+    "narration",
     "text-to-speech",
     "speech-to-text",
     "voice"

@@ -1,6 +1,6 @@
 ---
 name: speko
-description: Use Speko to transcribe audio, synthesize speech, and pick the model for each leg of a voice pipeline from measured benchmarks instead of a hardcoded vendor. One key covers STT, LLM and TTS, with a dry-run route preview, per-language selection, price ceilings and automatic failover. Use when asked to transcribe a recording or voice note, read something aloud, choose or justify a speech model, work in a language other than English, or cap voice spend. For placing phone calls, use the speko-calls skill; for answering incoming calls, use the speko-receptionist skill.
+description: Use Speko to turn text into speech, transcribe audio, and pick the model for each leg of a voice pipeline from measured benchmarks instead of a hardcoded vendor. Use when asked to read something aloud, narrate a script or message, make a voiceover or voicemail greeting, hear a voice before using it on a call, transcribe a recording or voice note, choose or justify a speech model, work in a language other than English, or cap voice spend. With the plugin's sign-in it uses the Speko MCP tools and needs no key; one Speko key covers STT, LLM and TTS for direct requests, with a dry-run route preview, per-language selection, price ceilings and automatic failover. For placing phone calls, use the speko-calls skill; for answering incoming calls, use the speko-receptionist skill.
 ---
 
 # Speko
@@ -12,11 +12,23 @@ price, per language — and fails over when one refuses.
 Base URL `https://api.speko.ai/v1`. Auth `Authorization: Bearer $SPEKO_API_KEY`. The key
 carries its own routing policy, so a fully configured key needs none of the headers below.
 
-This plugin also connects the hosted Speko MCP (`https://mcp.speko.ai/mcp`). That server
-covers the **platform** side — agents, sessions, phone numbers, knowledge bases, evals,
-deployments — and answers to OAuth or the same Speko key. It does **not** carry the router
-endpoints below, so use the curl forms here for transcription, synthesis and routing, and the
-MCP tools for anything that manages an agent or reads a session back.
+## Signed in through the plugin: use the MCP tools
+
+This plugin connects the hosted Speko MCP (`https://mcp.speko.ai/mcp`) with an OAuth sign-in,
+so speech works with no key:
+
+- `audio.synthesize` turns text into speech. Its `body` takes `text` and `intent`
+  (`{"language": "en"}`). To choose the voice, add `voice` with an id copied from
+  `voices.list`. The result is the audio and a download link.
+- `voices.list` lists the voices to choose from.
+- `audio.transcribe` transcribes audio from a link (`audio_url`).
+
+Use these tools when no `SPEKO_API_KEY` is set. To let the user hear a voice before it is
+used for an agent, a receptionist or a call, synthesize a short line in that voice.
+
+The curl forms below call the router directly and need `SPEKO_API_KEY`. Use them for scripts
+and for the route preview and routing headers described below. The MCP server also covers the
+platform side: agents, sessions, phone numbers, knowledge bases, evals and deployments.
 
 ## Pick and justify a stack before spending anything
 
@@ -95,13 +107,13 @@ Read back what actually happened: `x-route` is the vendor and model that answere
 
 This skill never places calls and never asks for a calling credential. Outbound telephony runs
 on a different host and is higher-impact, so it lives in the companion skill `speko-calls`,
-which reads its own environment variable and is only eligible once that is set.
+which confirms the number and the purpose with the user before every call.
 
 ## Gotchas
 
-- Two hosts, one key: `api.speko.ai` is the router (STT/LLM/TTS) and is the only host this
-  skill uses; `api.speko.dev` is the platform (agents, phone numbers, calls). The same Speko
-  key authenticates both, and the hosted MCP at `mcp.speko.ai` takes it or OAuth. Pick the host
+- Two hosts, one key: `api.speko.ai` is the router (STT/LLM/TTS) and is the only host the
+  curl forms in this skill use; `api.speko.dev` is the platform (agents, phone numbers,
+  calls). The same Speko key authenticates both, and the hosted MCP at `mcp.speko.ai` takes it or OAuth. Pick the host
   by the surface you need, not by which key you hold.
 - Keys are environment-scoped: a staging key fails against production. That is the 401 to check
   for first.
